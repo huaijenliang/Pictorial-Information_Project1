@@ -1,0 +1,29 @@
+function [ matchedIndex ] = matchFeatures( features1, features2, ratio )
+%UNTITLED4 Summary of this function goes here
+%   Detailed explanation goes here
+
+n1 = size(features1, 1);
+n2 = size(features2, 1);
+nMat
+
+for i = 1:n1
+    f1 = features1(i, :);
+    minDiff1 = inf;
+    minDiff2 = inf;
+    for j = 1:n2
+        f2 = features2(j, :);
+        diff = sumsqr(f1 - f2);
+        if diff < minDiff2
+            minDiff2 = diff;
+            if diff < minDiff1
+                minDiff2 = minDiff1;
+                minDiff1 = diff;
+            end
+        end
+    end
+    if minDiff1 / minDiff2 < ratio
+    end
+end
+
+end
+
