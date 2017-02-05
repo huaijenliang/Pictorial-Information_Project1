@@ -25,7 +25,7 @@ for i = 1:n1
             end
         end
     end
-    if minDiff1 / minDiff2 < ratio
+    if (minDiff1 / minDiff2) < ratio
         nMatched = nMatched + 1;
         matchedIndex(nMatched, :) = [i, index];
     end

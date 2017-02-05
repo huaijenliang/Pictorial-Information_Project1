@@ -1,0 +1,9 @@
+function [ inliers ] = findInliers( X, Y, x, y, h, thres )
+%UNTITLED8 Summary of this function goes here
+%   Detailed explanation goes here
+numData = numel(X);
+
+[X_h, Y_h] = arrayfun(@(H, x, y) apply_homography(H, x, y), h, x, y);
+ssd = 
+end
+
