@@ -1,6 +1,7 @@
 function [ matchedIndex ] = matchFeatures( features1, features2, ratio )
-%UNTITLED4 Summary of this function goes here
-%   Detailed explanation goes here
+%Find the best index of matched features
+%   ratio: the threshold of (minimium difference / the second miinimum
+%   difference) to determine whether accept the match or not
 
 n1 = size(features1, 1);
 n2 = size(features2, 1);

@@ -1,6 +1,8 @@
 function [ features ] = getFeatures( img, rows, cols )
-%UNTITLED3 Summary of this function goes here
-%   Detailed explanation goes here
+%Get 8X8 features for each data point
+%   img : input data
+%   rows: the vector of the row of the point for getting features from
+%   cols: the vector of the col of the point for getting features from
 fullDim = 40;
 sampleDim = 8;
 pointsNum = numel(rows);
