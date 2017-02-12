@@ -7,6 +7,7 @@ mask = mask1 + mask2;
 % mask_tmp = 1 ./ mask;
 % mask_tmp(mask == 0) = 0;
 mask(mask == 2) = 0.5;
+mask = repmat(mask, 1, 1, size(img1, 3));
 
 output = mask .* img1 + mask .* img2;
 output(output > 1) = 1;

@@ -27,7 +27,7 @@ for c = 1:channels
     temp_LD = m(index + 1);
     temp_RU = m(index + rows);
     temp_RD = m(index + rows + 1);
-    temp = (1 - yC_diff) .* ((1 - xC_diff) .* temp_LU + xC_diff .* temp_LD) + yC_diff .* ((1 - xC_diff) .* temp_RU + xC_diff .* temp_RD);
+    temp = (1 - yC_diff) .* ((1 - xC_diff) .* temp_LU + xC_diff .* temp_RU) + yC_diff .* ((1 - xC_diff) .* temp_LD + xC_diff .* temp_RD);
     temp(~mask_valid) = 0;
     output(:, :, c) = temp;
 end

@@ -2,9 +2,9 @@ function [ output ] = pyramidBlend( first, second, mask )
 %UNTITLED Summary of this function goes here
 %   Detailed explanation goes here
 
-first = im2double(first);
-second = im2double(second);
-mask = double(mask);
+% first = im2double(first);
+% second = im2double(second);
+% mask = double(mask);
 
 minSize = min([size(first, 1), size(first, 2)]);
 depth = floor(log2(minSize)) - 4;
