@@ -24,7 +24,7 @@ c2 = cornermetric(img2_gray);
 % keyboard
 features1 = getFeatures(img1_gray, row1, col1);
 features2 = getFeatures(img2_gray, row2, col2);
-matchedIndex = matchFeatures(features1, features2, 0.7);
+matchedIndex = matchFeatures(features1, features2, 0.3);
 mR1 = row1(matchedIndex(:, 1));
 mC1 = col1(matchedIndex(:, 1));
 m1 = [mC1 mR1];
