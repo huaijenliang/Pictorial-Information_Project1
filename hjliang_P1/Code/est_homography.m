@@ -22,3 +22,4 @@ end
 [U S V] = svd(A);
 h = V(:,9);
 H = reshape(h,3,3)';
+H = H ./ H(3, 3);
