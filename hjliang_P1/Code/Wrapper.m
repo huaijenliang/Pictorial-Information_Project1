@@ -8,11 +8,16 @@ for i = 1:imagesNum
     fileName = strcat(path, files(i).name);
     images{i} = imread(fileName);
     images{i} = im2double(images{i});
+%     images{i} = cylindricalProj(images{i}, 600);
 end
-
-[orderedIndex, H] = findOrder(images, 0.4);
+% set 1 0.3, 0.3
+% set 2 0.3, 0.3
+[orderedIndex, H] = findOrder(images, 0.3, 0.3);
 panaromaNum = numel(orderedIndex);
 outputImg = cell(1, panaromaNum);
+for i = 1:imagesNum
+    images{i} = cylindricalProj(images{i}, 600);
+end
 for p = 1:panaromaNum
     rigidIndex = orderedIndex{p}(1);
     if numel(orderedIndex{p}) == 1
@@ -27,6 +32,7 @@ for p = 1:panaromaNum
         % TODO
         % Blending mask warping
         [outputImg{p}, outputRef] = stitchPair(outputImg{p}, images{index}, h, outputRef, 'Max');
+        disp(strcat('Blending', int2str(p), ' and ', int2str(index), ' done.'))
     end
 end
 
