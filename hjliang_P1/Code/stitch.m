@@ -32,7 +32,7 @@ mR2 = row2(matchedIndex(:, 2));
 mC2 = col2(matchedIndex(:, 2));
 m2 = [mC2 mR2];
 dispMatchedFeatures(img1, img2, m1, m2, 'montage');
-h = myRANSAC(mC1, mR1, mC2, mR2, 1000, 0.9, 2);
+[h, ~] = myRANSAC(mC1, mR1, mC2, mR2, 1000, 0.9, 2);
 
 % img1 = cylindricalProj(im2double(img1), 2000);
 % img2 = cylindricalProj(im2double(img2), 2000);

@@ -12,7 +12,7 @@ height = ceil(yLimits(2) - yLimits(1));
 % define output image coordinate
 outRef = imref2d([height width], xLimits, yLimits);
 
-[img1_new, img1Ref] = imwarp(img1, imref2d(size(img1)), projective2d(eye(3)), 'OutputView', outRef);
+[img1_new, img1Ref] = imwarp(img1, img1Ref, projective2d(eye(3)), 'OutputView', outRef);
 [img2_new, img2Ref] = imwarp(img2, imref2d(size(img2)), projective2d(h'), 'OutputView', outRef);
 
 mask1 = createMask(img1);
