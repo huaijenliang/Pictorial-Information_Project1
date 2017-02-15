@@ -17,7 +17,7 @@ for i = 1:imagesNum
 end
 % set 1 0.3, 0.3 900
 % set 2 0.3, 0.3 800
-% set 3 0.2, 0.3 600
+% set 3 0.2, 0.2 700
 % custom set 1
 % custom set 2 0.3 0.2 700
 % test set 1
