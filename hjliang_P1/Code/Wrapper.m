@@ -12,6 +12,7 @@ for i = 1:imagesNum
     fileName = strcat(path, files(i).name);
     images{i} = imread(fileName);
     images{i} = imresize(images{i}, 0.2);
+    images{i} = imrotate(images{i}, -90);
     imwrite(images{i}, fileName);
     images{i} = im2double(images{i});
 %     images{i} = cylindricalProj(images{i}, 600);
