@@ -55,7 +55,7 @@ for i = 1:(imagesNum - 1)
         m2 = [mC2 mR2];
         dispMatchedFeatures(images{i}, images{j}, m1, m2, 'montage');
         [h, inliersRatio] = myRANSAC(mC1, mR1, mC2, mR2, 10000, 0.9, 10);
-        if inliersRatio > inliersThreshold && cond(h) < 1E6 % check if h is singular
+        if inliersRatio > inliersThreshold && cond(h) < 2E5 % check if h is singular
             links(i, j) = 1;
             links(j, i) = 1;
             H{i, j} = h;

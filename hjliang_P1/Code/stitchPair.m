@@ -12,13 +12,13 @@ height = ceil(yLimits(2) - yLimits(1));
 % define output image coordinate
 outRef = imref2d([height width], xLimits, yLimits);
 
-[img1_new, img1Ref] = imwarp(img1, img1Ref, projective2d(eye(3)), 'OutputView', outRef);
+[img1_new, ~] = imwarp(img1, img1Ref, projective2d(eye(3)), 'OutputView', outRef);
 [img2_new, img2Ref] = imwarp(img2, imref2d(size(img2)), projective2d(h'), 'OutputView', outRef);
 
 % mask1 = createMask(img1);
 % mask1ref = imref2d(size(mask1));
 % [mask1_new, ~] = imwarp(mask1, mask1ref, projective2d(eye(3)), 'OutputView', outRef);
-mask1ref = imref2d(size(img1Mask));
+mask1ref = img1Ref;% imref2d(size(img1Mask));
 [mask1_new, ~] = imwarp(img1Mask, mask1ref, projective2d(eye(3)), 'OutputView', outRef);
 mask2 = createMask(img2);
 mask2ref = imref2d(size(mask2));

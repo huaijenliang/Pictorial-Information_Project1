@@ -1,20 +1,30 @@
-function [ outputImg ] = Wrapper( path, f )
+function [ outputImg ] = Wrapper( path, f, inliersRatio, matchRatio )
 %UNTITLED6 Summary of this function goes here
 %   Detailed explanation goes here
-files = dir(strcat(path, '*.JPG'));
+files1 = dir(strcat(path, '*.jpg'));
+files2 = dir(strcat(path, '*.JPG'));
+files3 = dir(strcat(path, '*.png'));
+files4 = dir(strcat(path, '*.PNG'));
+files = [files1; files2; files3; files4];
 imagesNum = length(files);
 images = cell(1, imagesNum);
 for i = 1:imagesNum
     fileName = strcat(path, files(i).name);
     images{i} = imread(fileName);
-    images{i} = imresize(images{i}, 0.2);
+    % images{i} = imresize(images{i}, 0.2);
     images{i} = im2double(images{i});
 %     images{i} = cylindricalProj(images{i}, 600);
 end
 % set 1 0.3, 0.3 900
 % set 2 0.3, 0.3 800
 % set 3 0.2, 0.3 600
-[orderedIndex, H] = findOrder(images, 0.3, 0.3, f);
+% custom set 1
+% custom set 2 0.3 0.2 700
+% test set 1
+% test set 2 0.3 0.2 1
+% test set 3 0.3 0.2 1000
+% test set 4 0.3 0.3 1000
+[orderedIndex, H] = findOrder(images, inliersRatio, matchRatio, f);
 panaromaNum = numel(orderedIndex);
 outputImg = cell(1, panaromaNum);
 % for i = 1:imagesNum
@@ -34,8 +44,9 @@ for p = 1:panaromaNum
         h = H{p}{i};
         % TODO
         % Blending mask warping
-        [outputImg{p}, outputRef, outputMask] = stitchPair(outputImg{p}, images{index}, h, outputRef, outputMask, 'Average');
+        [outputImg{p}, outputRef, outputMask] = stitchPair(outputImg{p}, images{index}, h, outputRef, outputMask, 'Pyramid');
         disp(strcat('Blending', int2str(rigidIndex), ' and ', int2str(index), ' done.'))
+        imshow(outputImg{p});
     end
 end
 
