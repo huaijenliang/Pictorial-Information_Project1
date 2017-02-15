@@ -12,12 +12,12 @@ for i = 1:imagesNum
 end
 % set 1 0.3, 0.3
 % set 2 0.3, 0.3
-[orderedIndex, H] = findOrder(images, 0.3, 0.3);
+[orderedIndex, H] = findOrder(images, 0.3, 0.3, 800);
 panaromaNum = numel(orderedIndex);
 outputImg = cell(1, panaromaNum);
-for i = 1:imagesNum
-    images{i} = cylindricalProj(images{i}, 600);
-end
+% for i = 1:imagesNum
+%     images{i} = cylindricalProj(images{i}, 600);
+% end
 for p = 1:panaromaNum
     rigidIndex = orderedIndex{p}(1);
     if numel(orderedIndex{p}) == 1
@@ -26,12 +26,13 @@ for p = 1:panaromaNum
     end
     outputImg{p} = images{rigidIndex};
     outputRef = imref2d(size(outputImg{p}));
+    outputMask = createMask(outputImg{p});
     for i = 2:length(orderedIndex{p})
         index = orderedIndex{p}(i);
         h = H{p}{i};
         % TODO
         % Blending mask warping
-        [outputImg{p}, outputRef] = stitchPair(outputImg{p}, images{index}, h, outputRef, 'Max');
+        [outputImg{p}, outputRef, outputMask] = stitchPair(outputImg{p}, images{index}, h, outputRef, outputMask, 'Pyramid');
         disp(strcat('Blending', int2str(p), ' and ', int2str(index), ' done.'))
     end
 end

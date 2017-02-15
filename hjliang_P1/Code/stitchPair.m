@@ -1,4 +1,4 @@
-function [ outputImg, outRef ] = stitchPair( img1, img2, h, img1Ref, blend )
+function [ outputImg, outRef, outputMask ] = stitchPair( img1, img2, h, img1Ref, img1Mask, blend )
 %UNTITLED Summary of this function goes here
 %   Detailed explanation goes here
 [img2_new, img2Ref] = imwarp(img2, imref2d(size(img2)), projective2d(h'));
@@ -15,15 +15,18 @@ outRef = imref2d([height width], xLimits, yLimits);
 [img1_new, img1Ref] = imwarp(img1, img1Ref, projective2d(eye(3)), 'OutputView', outRef);
 [img2_new, img2Ref] = imwarp(img2, imref2d(size(img2)), projective2d(h'), 'OutputView', outRef);
 
-mask1 = createMask(img1);
-mask1ref = imref2d(size(mask1));
-[mask1_new, ~] = imwarp(mask1, mask1ref, projective2d(eye(3)), 'OutputView', outRef);
+% mask1 = createMask(img1);
+% mask1ref = imref2d(size(mask1));
+% [mask1_new, ~] = imwarp(mask1, mask1ref, projective2d(eye(3)), 'OutputView', outRef);
+mask1ref = imref2d(size(img1Mask));
+[mask1_new, ~] = imwarp(img1Mask, mask1ref, projective2d(eye(3)), 'OutputView', outRef);
 mask2 = createMask(img2);
 mask2ref = imref2d(size(mask2));
 [mask2_new, ~] = imwarp(mask2, mask2ref, projective2d(h'), 'OutputView', outRef);
 % mask1_new = round(mask1_new);
 % mask2_new = round(mask2_new);
-mask = mask1_new ./ (mask1_new + mask2_new);
+outputMask = mask1_new + mask2_new;
+mask = mask1_new ./ outputMask;
 mask(mask1_new == 0) = 0;
 
 if strcmp(blend, 'Feather')

@@ -31,7 +31,7 @@ for c = 1:channels
     temp(~mask_valid) = 0;
     output(:, :, c) = temp;
 end
-imshow(output);
+% imshow(output);
 
 end
 

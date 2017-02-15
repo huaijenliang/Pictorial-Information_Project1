@@ -1,4 +1,4 @@
-function [ orderedIndex, h ] = findOrder( images, inliersThreshold, matchRatio )
+function [ orderedIndex, h ] = findOrder( images, inliersThreshold, matchRatio, f )
 %UNTITLED2 Summary of this function goes here
 %   orderedIndex: a 1XP cell array, where P is # of panaroma sets, and each
 %   cell is ordered index for the panaroma
@@ -19,7 +19,19 @@ for i = 1:imagesNum
     img_gray = im2double(rgb2gray(images{i}));
     c = cornermetric(img_gray);
     [rows{i}, cols{i}] = ANMS(c, 400);
+    % project to cylinder
+%     if f > 0
+%         images{i} = cylindricalProj(images{i}, f);
+%         img_gray = im2double(rgb2gray(images{i}));
+%         [rows{i}, cols{i}] = featuresToCylinder(rows{i}, cols{i}, images{i}, f);
+%     end
     features{i} = getFeatures(img_gray, rows{i}, cols{i});
+end
+
+if f > 0
+    for i = 1:imagesNum
+        images{i} = cylindricalProj(images{i}, f);
+    end
 end
 
 % find homography and construct graph
@@ -33,12 +45,17 @@ for i = 1:(imagesNum - 1)
         end
         mR1 = rows{i}(matchedIndex(:, 1));
         mC1 = cols{i}(matchedIndex(:, 1));
-        m1 = [mC1 mR1];
         mR2 = rows{j}(matchedIndex(:, 2));
         mC2 = cols{j}(matchedIndex(:, 2));
+        % cylindrical projection
+        if f > 0
+            [mR1, mC1] = featuresToCylinder(mR1, mC1, images{i}, f);
+            [mR2, mC2] = featuresToCylinder(mR2, mC2, images{j}, f);
+        end
+        m1 = [mC1 mR1];
         m2 = [mC2 mR2];
-%         dispMatchedFeatures(images{i}, images{j}, m1, m2, 'montage');
-        [h, inliersRatio] = myRANSAC(mC1, mR1, mC2, mR2, 10000, 0.9, 2);
+        dispMatchedFeatures(images{i}, images{j}, m1, m2, 'montage');
+        [h, inliersRatio] = myRANSAC(mC1, mR1, mC2, mR2, 10000, 0.9, 3);
         if inliersRatio > inliersThreshold && cond(h) < 1E6 % check if h is singular
             links(i, j) = 1;
             links(j, i) = 1;
