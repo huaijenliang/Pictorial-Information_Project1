@@ -10,10 +10,10 @@ for i = 1:imagesNum
     images{i} = im2double(images{i});
 %     images{i} = cylindricalProj(images{i}, 600);
 end
-% set 1 0.3, 0.3
-% set 2 0.3, 0.3
+% set 1 0.3, 0.3 900
+% set 2 0.3, 0.3 800
 % set 3 0.2, 0.3 600
-[orderedIndex, H] = findOrder(images, 0.3, 0.3, 0);
+[orderedIndex, H] = findOrder(images, 0.3, 0.3, 900);
 panaromaNum = numel(orderedIndex);
 outputImg = cell(1, panaromaNum);
 % for i = 1:imagesNum
