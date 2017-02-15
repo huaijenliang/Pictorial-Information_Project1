@@ -19,14 +19,13 @@ for i = 1:imagesNum
     img_gray = im2double(rgb2gray(images{i}));
     c = cornermetric(img_gray);
     [rows{i}, cols{i}] = ANMS(c, 400);
-    % project to cylinder
-%     if f > 0
-%         images{i} = cylindricalProj(images{i}, f);
-%         img_gray = im2double(rgb2gray(images{i}));
-%         [rows{i}, cols{i}] = featuresToCylinder(rows{i}, cols{i}, images{i}, f);
-%     end
+%     imshow(images{i})
+%     hold on
+%     plot(cols{i}, rows{i}, 'r+')
     features{i} = getFeatures(img_gray, rows{i}, cols{i});
 end
+
+clear fig
 
 if f > 0
     for i = 1:imagesNum
@@ -55,7 +54,7 @@ for i = 1:(imagesNum - 1)
         m1 = [mC1 mR1];
         m2 = [mC2 mR2];
         dispMatchedFeatures(images{i}, images{j}, m1, m2, 'montage');
-        [h, inliersRatio] = myRANSAC(mC1, mR1, mC2, mR2, 10000, 0.9, 3);
+        [h, inliersRatio] = myRANSAC(mC1, mR1, mC2, mR2, 10000, 0.9, 10);
         if inliersRatio > inliersThreshold && cond(h) < 1E6 % check if h is singular
             links(i, j) = 1;
             links(j, i) = 1;
