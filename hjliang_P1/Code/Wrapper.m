@@ -1,4 +1,4 @@
-function [ outputImg ] = Wrapper( path, f, inliersRatio, matchRatio )
+function [ outputImg ] = Wrapper( path, inliersRatio, matchRatio, f )
 %UNTITLED6 Summary of this function goes here
 %   Detailed explanation goes here
 files1 = dir(strcat(path, '*.jpg'));
@@ -11,7 +11,8 @@ images = cell(1, imagesNum);
 for i = 1:imagesNum
     fileName = strcat(path, files(i).name);
     images{i} = imread(fileName);
-    % images{i} = imresize(images{i}, 0.2);
+    images{i} = imresize(images{i}, 0.2);
+%     imwrite(images{i}, fileName);
     images{i} = im2double(images{i});
 %     images{i} = cylindricalProj(images{i}, 600);
 end
