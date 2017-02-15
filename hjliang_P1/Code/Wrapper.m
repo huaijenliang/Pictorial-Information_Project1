@@ -12,7 +12,8 @@ for i = 1:imagesNum
 end
 % set 1 0.3, 0.3
 % set 2 0.3, 0.3
-[orderedIndex, H] = findOrder(images, 0.3, 0.3, 800);
+% set 3 0.2, 0.3 600
+[orderedIndex, H] = findOrder(images, 0.3, 0.3, 0);
 panaromaNum = numel(orderedIndex);
 outputImg = cell(1, panaromaNum);
 % for i = 1:imagesNum
