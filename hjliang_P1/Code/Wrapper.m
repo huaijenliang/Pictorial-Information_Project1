@@ -1,4 +1,4 @@
-function [ outputImg ] = Wrapper( path )
+function [ outputImg ] = Wrapper( path, f )
 %UNTITLED6 Summary of this function goes here
 %   Detailed explanation goes here
 files = dir(strcat(path, '*.jpg'));
@@ -13,7 +13,7 @@ end
 % set 1 0.3, 0.3 900
 % set 2 0.3, 0.3 800
 % set 3 0.2, 0.3 600
-[orderedIndex, H] = findOrder(images, 0.3, 0.3, 900);
+[orderedIndex, H] = findOrder(images, 0.2, 0.3, f);
 panaromaNum = numel(orderedIndex);
 outputImg = cell(1, panaromaNum);
 % for i = 1:imagesNum
@@ -33,8 +33,8 @@ for p = 1:panaromaNum
         h = H{p}{i};
         % TODO
         % Blending mask warping
-        [outputImg{p}, outputRef, outputMask] = stitchPair(outputImg{p}, images{index}, h, outputRef, outputMask, 'Pyramid');
-        disp(strcat('Blending', int2str(p), ' and ', int2str(index), ' done.'))
+        [outputImg{p}, outputRef, outputMask] = stitchPair(outputImg{p}, images{index}, h, outputRef, outputMask, 'Average');
+        disp(strcat('Blending', int2str(rigidIndex), ' and ', int2str(index), ' done.'))
     end
 end
 

@@ -70,9 +70,15 @@ end
 panaromaNum = 0;
 orderedIndex = cell(1, imagesNum);
 h = cell(1, imagesNum);
+middlePoint = ceil(imagesNum / 2);
 for i = 1:imagesNum
-    if flags(i) == 0
-        [list, flags, h_list] = bfs(i, links, flags, H);
+    res = floor(i / 2);
+    if mod(i, 2) == 1
+        res = -res;
+    end
+    index = middlePoint + res;
+    if flags(index) == 0
+        [list, flags, h_list] = bfs(index, links, flags, H);
         panaromaNum = panaromaNum + 1;
         orderedIndex{panaromaNum} = list;
         h{panaromaNum} = h_list;
