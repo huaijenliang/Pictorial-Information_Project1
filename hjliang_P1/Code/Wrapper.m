@@ -1,19 +1,11 @@
-function [ outputImg ] = Wrapper( path, inliersRatio, matchRatio, f )
+function [ panorama ] = Wrapper( files )
 %UNTITLED6 Summary of this function goes here
 %   Detailed explanation goes here
-files1 = dir(strcat(path, '*.jpg'));
-files2 = dir(strcat(path, '*.JPG'));
-files3 = dir(strcat(path, '*.png'));
-files4 = dir(strcat(path, '*.PNG'));
-files = [files1; files2; files3; files4];
 imagesNum = length(files);
 images = cell(1, imagesNum);
 for i = 1:imagesNum
-    fileName = strcat(path, files(i).name);
+    fileName = files(i);
     images{i} = imread(fileName);
-    images{i} = imresize(images{i}, 0.2);
-    images{i} = imrotate(images{i}, -90);
-    imwrite(images{i}, fileName);
     images{i} = im2double(images{i});
 %     images{i} = cylindricalProj(images{i}, 600);
 end
@@ -26,6 +18,9 @@ end
 % test set 2 0.3 0.2 1
 % test set 3 0.3 0.2 1000
 % test set 4 0.3 0.3 1000
+inliersRatio = 0.3;
+matchRatio = 0.3;
+f = 800;
 [orderedIndex, H] = findOrder(images, inliersRatio, matchRatio, f);
 panaromaNum = numel(orderedIndex);
 outputImg = cell(1, panaromaNum);
@@ -48,11 +43,12 @@ for p = 1:panaromaNum
         % Blending mask warping
         [outputImg{p}, outputRef, outputMask] = stitchPair(outputImg{p}, images{index}, h, outputRef, outputMask, 'Pyramid');
         disp(strcat('Blending', int2str(rigidIndex), ' and ', int2str(index), ' done.'))
-        imshow(outputImg{p});
+%         imshow(outputImg{p});
     end
+    panorama = outputImg{p};
 end
 
-imshow(outputImg{1});
+% imshow(outputImg{1});
 
 % img1 = images{1};%imread('../Images/Set3/2.jpg');
 % img2 = images{2};%imread('../Images/Set3/3.jpg');
